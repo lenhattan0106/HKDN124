@@ -28,18 +28,12 @@ const ForgotPassword = () => {
 
                 {/* Phần hiển thị form quên mật khẩu */}
                 <div className="forgot-password-form-section">
-                    <h2 className="forgot-password-title">Change Your Password?</h2>
+                    <h2 className="forgot-password-title">New Password</h2>
                     {/* <p className="forgot-password-info">
                         We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!
                     </p> */}
                     <form className="forgot-password-form" onSubmit={handleResetPassword}>
-                        <input
-                            type="email"
-                            placeholder="Mật khẩu cũ..."
-                            className="forgot-password-input"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+
                         <input
                             type="email"
                             placeholder="Mật khẩu mới..."
@@ -56,9 +50,9 @@ const ForgotPassword = () => {
                         />
                         <button type="submit" className="forgot-password-button">Save</button>
                     </form>
-                    {/* <div className="forgot-password-footer">
+                    <div className="forgot-password-footer">
                         Already have an account? <Link to="/">Login!</Link>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </div>
