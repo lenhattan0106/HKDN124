@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->tinyInteger('status')->default(0);
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::create('attachments', function (Blueprint $table) {
+            $table->integer('attachment_id', true);
+            $table->integer('message_id')->index('message_id');
+            $table->string('file_url')->nullable();
+            $table->string('file_type', 50)->nullable();
+            $table->integer('file_size')->nullable();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('attachments');
     }
 };

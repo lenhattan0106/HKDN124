@@ -2,49 +2,65 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+/**
+ * @property integer $user_id
+ * @property string $username
+ * @property string $password_hash
+ * @property string $email
+ * @property string $role
+ * @property string $created_at
+ * @property string $status
+ * @property string $last_login
+ * @property Message[] $messages
+ * @property Passwordreset[] $passwordresets
+ * @property Roomparticipant[] $roomparticipants
+ * @property Userpermission[] $userpermissions
+ */
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    /**
+     * The primary key for the model.
+     * 
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['username', 'password_hash', 'email', 'role', 'created_at', 'status', 'last_login'];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function setPasswordAttribute($value)
+    public function messages()
     {
-        $this->attributes['password'] = Hash::make($value);
+        return $this->hasMany('App\Models\Message', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function passwordresets()
+    {
+        return $this->hasMany('App\Models\Passwordreset', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function roomparticipants()
+    {
+        return $this->hasMany('App\Models\Roomparticipant', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userpermissions()
+    {
+        return $this->hasMany('App\Models\Userpermission', null, 'user_id');
     }
 }

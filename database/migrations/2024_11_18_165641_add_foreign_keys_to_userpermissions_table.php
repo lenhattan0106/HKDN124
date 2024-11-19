@@ -13,14 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+        Schema::table('userpermissions', function (Blueprint $table) {
+            $table->foreign(['user_id'], 'userpermissions_ibfk_1')->references(['user_id'])->on('users')->onDelete('CASCADE');
         });
     }
 
@@ -31,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('userpermissions', function (Blueprint $table) {
+            $table->dropForeign('userpermissions_ibfk_1');
+        });
     }
 };
